@@ -4,14 +4,37 @@ const scheduleModel = require("./scheduleModel");
 module.exports = {
   getAllSchedule: async (request, response) => {
     try {
-      const result = await scheduleModel.getAllSchedule();
-      // response.status(200);
-      // response.send("hello world");
+      const { sort, searchLocation } = request.query;
+      let { page, limit, searchMovieId } = request.query;
+      page = Number(page);
+      limit = Number(limit);
+      searchMovieId = Number(searchMovieId);
+
+      const offset = page * limit - limit;
+      const totalData = await scheduleModel.getTotalSchedule();
+      const totalPage = Math.ceil(totalData / limit);
+
+      const pageInfo = {
+        page,
+        totalPage,
+        limit,
+        totalData,
+      };
+
+      const result = await scheduleModel.getAllSchedule(
+        searchLocation,
+        searchMovieId,
+        sort,
+        limit,
+        offset
+      );
+
       return helperWrapper.response(
         response,
         200,
         "sukses get schedule",
-        result
+        result,
+        pageInfo
       );
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);

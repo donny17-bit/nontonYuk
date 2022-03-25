@@ -2,26 +2,28 @@ const helperWrapper = require("../../helpers/wrapper");
 const movieModel = require("./movieModel");
 
 module.exports = {
-  getHello: async (request, response) => {
-    try {
-      // response.status(200);
-      // response.send("hello world");
-      return helperWrapper.response(
-        response,
-        200,
-        "sukses get data",
-        "hello world"
-      );
-    } catch (error) {
-      return helperWrapper.response(response, 400, "bad request", null);
-    }
-  },
+  // getHello: async (request, response) => {
+  //   try {
+  //     // response.status(200);
+  //     // response.send("hello world");
+  //     return helperWrapper.response(
+  //       response,
+  //       200,
+  //       "sukses get data",
+  //       "hello world"
+  //     );
+  //   } catch (error) {
+  //     return helperWrapper.response(response, 400, "bad request", null);
+  //   }
+  // },
 
   getAllMovie: async (request, response) => {
     // buat fitu pencarian berdasarkan nama
     // buat fitur pengurutan berdasarkan nama
     try {
+      const { sort, searchName } = request.query;
       let { page, limit } = request.query;
+
       page = Number(page);
       limit = Number(limit);
       // 1. offset
@@ -37,9 +39,13 @@ module.exports = {
         limit,
         totalData,
       };
-      const result = await movieModel.getAllMovies(limit, offset);
-      // response.status(200);
-      // response.send("hello world");
+      const result = await movieModel.getAllMovies(
+        searchName,
+        sort,
+        limit,
+        offset
+      );
+
       return helperWrapper.response(
         response,
         200,
