@@ -4,11 +4,36 @@ const scheduleModel = require("./scheduleModel");
 module.exports = {
   getAllSchedule: async (request, response) => {
     try {
-      const { sort, searchLocation } = request.query;
-      let { page, limit, searchMovieId } = request.query;
-      page = Number(page);
-      limit = Number(limit);
-      searchMovieId = Number(searchMovieId);
+      const { searchLocation } = request.query;
+      let { page, limit, searchMovieId, sort } = request.query;
+
+      // cek page kosong atau tidack
+      if (page) {
+        page = Number(page);
+      } else {
+        page = 1;
+      }
+
+      // cek limit kosong atau tidack
+      if (limit) {
+        limit = Number(limit);
+      } else {
+        limit = 5;
+      }
+
+      if (sort === undefined) {
+        sort = "location";
+      }
+
+      // cek apakah salah satu dari searchMovieId / searchLocation ada atau tidak
+      // agar tidak salah di querynya
+      if (searchMovieId === undefined) {
+        if (searchLocation) {
+          searchMovieId = undefined;
+        } else {
+          searchMovieId = "";
+        }
+      }
 
       const offset = page * limit - limit;
       const totalData = await scheduleModel.getTotalSchedule();

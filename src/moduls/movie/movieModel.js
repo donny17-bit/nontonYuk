@@ -47,23 +47,18 @@ module.exports = {
 
   createMovies: (data) =>
     new Promise((resolve, reject) => {
-      const query = connection.query(
-        "INSERT INTO movies SET ?",
-        data,
-        (error, result) => {
-          if (!error) {
-            console.log(result);
-            const newResult = {
-              id: result.insertId,
-              ...data,
-            };
-            resolve(newResult);
-          } else {
-            reject(new Error(error.sqlMessage));
-          }
+      connection.query("INSERT INTO movies SET ?", data, (error, result) => {
+        if (!error) {
+          const newResult = {
+            // digunakan untuk hanya menyimpan/menampilkan data yang penting dari result
+            id: result.insertId,
+            ...data,
+          };
+          resolve(newResult);
+        } else {
+          reject(new Error(error.sqlMessage));
         }
-      );
-      console.log(query.sql);
+      });
     }),
 
   updateMovies: (id, data) =>

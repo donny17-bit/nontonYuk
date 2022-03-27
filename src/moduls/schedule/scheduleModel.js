@@ -16,19 +16,21 @@ module.exports = {
     }),
   getAllSchedule: (searchLocation, searchMovieId, sort, limit, offset) =>
     new Promise((resolve, reject) => {
-      connection.query(
-        `SELECT * FROM schedule WHERE location LIKE '%${searchLocation}%' 
-        OR movieId LIKE '%${searchMovieId}%' ORDER BY ${sort} LIMIT ? OFFSET ?`,
-        [limit, offset],
-        (error, result) => {
-          if (!error) {
-            resolve(result);
-          } else {
-            reject(new Error(error.sqlMessage));
-          }
+      const query = `SELECT s.id, m.name, m.category, s.premiere, s.price, 
+      s.time, s.location, s.dateStart, s.dateEnd
+      FROM movies AS m 
+      JOIN schedule AS s on m.id = s.movieId
+      WHERE location LIKE '%${searchLocation}%' OR movieId LIKE '%${searchMovieId}%' 
+      ORDER BY ${sort}
+      LIMIT ? OFFSET ?`;
+      connection.query(query, [limit, offset], (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(new Error(error.sqlMessage));
         }
-      );
-    }), // bisa tapi jika searchLocation kosong dan movieId ada isi maka akan dimunculkan semua (-)
+      });
+    }),
 
   getScheduleById: (id) =>
     new Promise((resolve, reject) => {
@@ -49,7 +51,12 @@ module.exports = {
     new Promise((resolve, reject) => {
       connection.query("INSERT INTO schedule SET ?", data, (error, result) => {
         if (!error) {
-          resolve(result);
+          const newResult = {
+            // digunakan untuk hanya menyimpan/menampilkan data yang penting dari result
+            id: result.insertId,
+            ...data,
+          };
+          resolve(newResult);
         } else {
           reject(new Error(error.sqlMessage));
         }
