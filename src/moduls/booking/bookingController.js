@@ -17,6 +17,22 @@ module.exports = {
     }
   },
 
+  getBookingById: async (request, response) => {
+    try {
+      const id = request.params;
+
+      const result = await bookingModel.getBookingById(id);
+      return helperWrapper.response(
+        response,
+        200,
+        `sukses get booking by id`,
+        result
+      );
+    } catch (error) {
+      return helperWrapper.response(response, 400, "bad request", null);
+    }
+  },
+
   createBooking: async (request, response) => {
     try {
       //   console.log(request.body);

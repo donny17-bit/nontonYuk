@@ -47,4 +47,15 @@ module.exports = {
         }
       });
     }),
+
+  getBookingById: (id) =>
+    new Promise((resolve, reject) => {
+      connection.query("SELECT * FROM booking WHERE ?", id, (error, result) => {
+        if (!error) {
+          resolve(result);
+        } else {
+          reject(new Error(error.sqlMessage));
+        }
+      });
+    }),
 };
