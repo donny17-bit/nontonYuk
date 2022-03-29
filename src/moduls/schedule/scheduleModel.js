@@ -21,11 +21,11 @@ module.exports = {
       s.time, s.location, s.dateStart, s.dateEnd
       FROM movies AS m 
       JOIN schedule AS s on m.id = s.movieId
-      WHERE location LIKE '%${searchLocation}%' OR movieId LIKE '%${searchMovieId}%' 
+      WHERE location LIKE '%${searchLocation}%' OR movieId = '%${searchMovieId}%' 
       ORDER BY ${sort}
       LIMIT ? OFFSET ?`;
       // movieid id tdk like diganti where
-      // dibuat kondisi movieId like = ?
+      // dibuat kondisi if else movieId like = ?
 
       connection.query(query, [limit, offset], (error, result) => {
         if (!error) {

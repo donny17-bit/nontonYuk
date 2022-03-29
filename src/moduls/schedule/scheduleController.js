@@ -24,6 +24,7 @@ module.exports = {
       if (sort === undefined) {
         sort = "location";
       }
+      // dibikin falsy (!) = if (!sort) { blabla}
 
       // cek apakah salah satu dari searchMovieId / searchLocation ada atau tidak
       // agar tidak salah di querynya
