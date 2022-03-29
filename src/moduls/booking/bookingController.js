@@ -1,6 +1,5 @@
 const helperWrapper = require("../../helpers/wrapper");
 const bookingModel = require("./bookingModel");
-// const bookingModel = require("./bookingModel");
 
 module.exports = {
   getAllBooking: async (request, response) => {
@@ -35,7 +34,6 @@ module.exports = {
 
   createBooking: async (request, response) => {
     try {
-      //   console.log(request.body);
       const {
         scheduleId,
         dateBooking,
@@ -45,7 +43,6 @@ module.exports = {
         seat,
       } = request.body;
 
-      //   const seatRequest = seat;
       const setDataBooking = {
         scheduleId,
         dateBooking,
@@ -59,6 +56,7 @@ module.exports = {
 
       const bookingId = result.id;
 
+      // abaikan error
       seat.map(async (seat) => {
         const setDataSeat = { bookingId, seat };
         await bookingModel.createBookingSeat(setDataSeat);

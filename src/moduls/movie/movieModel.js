@@ -2,6 +2,7 @@ const connection = require("../../config/mySql");
 
 module.exports = {
   getTotalMovies: () =>
+    // masih salah bisa tanya arin atau teguh
     new Promise((resolve, reject) => {
       connection.query(
         "SELECT COUNT(*) AS total FROM movies",

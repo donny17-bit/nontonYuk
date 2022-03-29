@@ -2,6 +2,7 @@ const connection = require("../../config/mySql");
 
 module.exports = {
   getTotalSchedule: () =>
+    // masih salah bisa tanya arin atau teguh (lupa soale :v)
     new Promise((resolve, reject) => {
       connection.query(
         "SELECT COUNT(*) AS total FROM schedule",
@@ -23,6 +24,9 @@ module.exports = {
       WHERE location LIKE '%${searchLocation}%' OR movieId LIKE '%${searchMovieId}%' 
       ORDER BY ${sort}
       LIMIT ? OFFSET ?`;
+      // movieid id tdk like diganti where
+      // dibuat kondisi movieId like = ?
+
       connection.query(query, [limit, offset], (error, result) => {
         if (!error) {
           resolve(result);
