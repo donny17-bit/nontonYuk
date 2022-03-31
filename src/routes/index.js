@@ -5,14 +5,11 @@ const Router = express.Router();
 const movieRoutes = require("../moduls/movie/movieRoutes");
 const scheduleRoutes = require("../moduls/schedule/scheduleRoutes");
 const bookingRoutes = require("../moduls/booking/bookingRoutes");
+const authRoutes = require("../moduls/auth/authRoutes");
 
 Router.use("/movie", movieRoutes);
 Router.use("/schedule", scheduleRoutes);
 Router.use("/booking", bookingRoutes);
-
-// Router.get("/hello", (request, response) => {
-//   response.status(200);
-//   response.send("Hello World");
-// });
+Router.use("/auth", authRoutes);
 
 module.exports = Router;

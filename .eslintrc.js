@@ -12,6 +12,7 @@ module.exports = {
   },
   plugins: ["prettier"],
   rules: {
+    "prefer-destructuring": ["error", { object: true, array: false }], // buat sementara, biar auth.js ga error
     "prettier/prettier": [
       "error",
       {

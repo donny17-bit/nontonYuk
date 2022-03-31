@@ -1,9 +1,11 @@
+const redis = require("../../config/redis");
 const helperWrapper = require("../../helpers/wrapper");
 const movieModel = require("./movieModel");
 
 module.exports = {
   getAllMovie: async (request, response) => {
     try {
+      // console.log(request.decodeToken);
       // let {} = request.query;
       let { page, limit, sort, searchName } = request.query;
 
@@ -21,7 +23,7 @@ module.exports = {
         limit = 5;
       }
 
-      if (sort === undefined) {
+      if (!sort) {
         sort = "name";
       }
 
@@ -76,6 +78,9 @@ module.exports = {
         );
       }
 
+      // proses menyimpan ke redis
+      redis.setEx(`getMovie:${JSON}`, 3600, JSON.stringify(result));
+
       return helperWrapper.response(
         response,
         200,
@@ -89,6 +94,7 @@ module.exports = {
 
   createMovies: async (request, response) => {
     try {
+      // console.log(request.file);
       const { name, category, synopsis } = request.body;
       const setData = {
         name,
