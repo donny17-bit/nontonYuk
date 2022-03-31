@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const helperWrapper = require("../../helpers/wrapper");
 const authModel = require("./authModel");
 
@@ -37,7 +36,7 @@ module.exports = {
       }
 
       // encrypt password
-      const hash = bcrypt.hashSync(password, 8);
+      const hash = bcrypt.hashSync(password);
       // tanya soal salt
 
       setData = { ...setData, password: hash };
@@ -51,7 +50,6 @@ module.exports = {
   login: async (request, response) => {
     try {
       const { email, password } = request.body;
-
       const cekEmail = await authModel.getUserByEmail(email);
 
       //   1. jika email tidak ada di database
@@ -65,12 +63,12 @@ module.exports = {
       }
 
       // 2. jika password salah
-      // encripsi password bisa pake cvrypt/ crypto
-      if (cekEmail[0].password !== password) {
+      // encripsi password pake bcryptjs / crypto
+      if (!bcrypt.compareSync(password, cekEmail[0].password)) {
         return helperWrapper.response(response, 400, "wrong password", null);
       }
 
-      //   proses JWT
+      // //   proses JWT
       const payload = cekEmail[0];
       delete payload.password;
 
