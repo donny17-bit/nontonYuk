@@ -1,5 +1,6 @@
 const redis = require("../../config/redis");
 const helperWrapper = require("../../helpers/wrapper");
+const cloudinary = require("../../config/cloudinary");
 const movieModel = require("./movieModel");
 
 module.exports = {
@@ -94,18 +95,31 @@ module.exports = {
 
   createMovies: async (request, response) => {
     try {
-      // console.log(request.file);
-      const { name, category, synopsis } = request.body;
+      const { filename } = request.file;
+      const {
+        name,
+        category,
+        director,
+        cast,
+        releaseDate,
+        duration,
+        synopsis,
+      } = request.body;
+
       const setData = {
         name,
         category,
+        image: filename,
+        releaseDate,
+        cast,
+        director,
+        duration,
         synopsis,
       };
 
       const result = await movieModel.createMovies(setData);
       return helperWrapper.response(response, 200, "sukses post data", result);
     } catch (error) {
-      // console.log(error);
       return helperWrapper.response(response, 400, "bad request", null);
     }
   },
@@ -124,10 +138,25 @@ module.exports = {
         );
       }
 
-      const { name, category, synopsis } = request.body;
+      const { filename } = request.file;
+      const {
+        name,
+        category,
+        director,
+        cast,
+        releaseDate,
+        duration,
+        synopsis,
+      } = request.body;
+
       const setData = {
         name,
         category,
+        image: filename,
+        director,
+        cast,
+        releaseDate,
+        duration,
         synopsis,
         updatedAt: new Date(Date.now()),
       };
@@ -155,6 +184,17 @@ module.exports = {
 
   deleteMovies: async (request, response) => {
     try {
+      const { role } = request.decodeToken;
+
+      // cek role user
+      if (role !== "admin") {
+        return helperWrapper.response(
+          response,
+          400,
+          "Sorry, only admin can create movie data",
+          null
+        );
+      }
       const { id } = request.params;
       const cekId = await movieModel.getMovieById(id);
 
@@ -167,8 +207,12 @@ module.exports = {
         );
       }
 
-      const result = await movieModel.deleteMovies(id);
+      // (error, result) => {console.log(result, error)}
+      cloudinary.uploader.destroy(cekId[0].image, () => {
+        console.log("data berhasil di delete di cloudinary");
+      });
 
+      const result = await movieModel.deleteMovies(id);
       return helperWrapper.response(
         response,
         200,

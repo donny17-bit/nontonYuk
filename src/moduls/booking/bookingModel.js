@@ -50,12 +50,31 @@ module.exports = {
 
   getBookingById: (id) =>
     new Promise((resolve, reject) => {
-      connection.query("SELECT * FROM booking WHERE ?", id, (error, result) => {
-        if (!error) {
-          resolve(result);
-        } else {
-          reject(new Error(error.sqlMessage));
+      connection.query(
+        "SELECT * FROM booking WHERE id = ?",
+        id,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
         }
-      });
+      );
+    }),
+
+  getBookingByUserId: (userId) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "SELECT * FROM booking WHERE userId = ?",
+        userId,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
     }),
 };

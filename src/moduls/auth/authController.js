@@ -6,21 +6,17 @@ const authModel = require("./authModel");
 module.exports = {
   register: async (request, response) => {
     try {
-      // 1. encript password
-
       //   optional
       // 3. password minimal berapa, harus angka atau huruf besar, dll
+      // 4. kondisi email lebih lengkap, harus diakhiri .com, dll
 
-      const { email, firstName, password, image, noTelp, role, status } =
-        request.body;
+      const { email, firstName, lastName, password, noTelp } = request.body;
 
       let setData = {
         email,
         firstName,
-        image,
+        lastName,
         noTelp,
-        role,
-        status,
       };
 
       // 2. proses kondisi, cek apakah email sudah terdaftar belum
@@ -37,7 +33,6 @@ module.exports = {
 
       // encrypt password
       const hash = bcrypt.hashSync(password);
-      // tanya soal salt
 
       setData = { ...setData, password: hash };
       const result = await authModel.register(setData);
@@ -63,7 +58,7 @@ module.exports = {
       }
 
       // 2. jika password salah
-      // encripsi password pake bcryptjs / crypto
+      // encripsi password pake bcryptjs
       if (!bcrypt.compareSync(password, cekEmail[0].password)) {
         return helperWrapper.response(response, 400, "wrong password", null);
       }

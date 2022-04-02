@@ -18,9 +18,25 @@ module.exports = {
 
   getBookingById: async (request, response) => {
     try {
-      const id = request.params;
+      const { id } = request.params;
 
       const result = await bookingModel.getBookingById(id);
+      return helperWrapper.response(
+        response,
+        200,
+        `sukses get booking by id`,
+        result
+      );
+    } catch (error) {
+      return helperWrapper.response(response, 400, "bad request", null);
+    }
+  },
+
+  getBookingByUserId: async (request, response) => {
+    try {
+      const { userId } = request.params;
+
+      const result = await bookingModel.getBookingByUserId(userId);
       return helperWrapper.response(
         response,
         200,
@@ -35,6 +51,7 @@ module.exports = {
   createBooking: async (request, response) => {
     try {
       const {
+        userId,
         scheduleId,
         dateBooking,
         timeBooking,
@@ -44,6 +61,7 @@ module.exports = {
       } = request.body;
 
       const setDataBooking = {
+        userId,
         scheduleId,
         dateBooking,
         timeBooking,
@@ -56,9 +74,8 @@ module.exports = {
 
       const bookingId = result.id;
 
-      // abaikan error
-      seat.map(async (seat) => {
-        const setDataSeat = { bookingId, seat };
+      seat.map(async (value) => {
+        const setDataSeat = { bookingId, seat: value };
         await bookingModel.createBookingSeat(setDataSeat);
       });
 

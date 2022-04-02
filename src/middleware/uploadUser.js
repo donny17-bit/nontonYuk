@@ -7,7 +7,7 @@ const helperWrapper = require("../helpers/wrapper");
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "nontonYuk/movies",
+    folder: "nontonYuk/user",
   },
 });
 
@@ -17,14 +17,6 @@ const storage = new CloudinaryStorage({
 //     cb(null, "public/uploads/movie");
 //   },
 
-//   filename(req, file, cb) {
-//     // console.log(file);
-//     // file = {
-//     //   fieldname: 'image',
-//     //   originalname: 'LogoFazztrack.png',
-//     //   encoding: '7bit',
-//     //   mimetype: 'image/png'
-//     // }
 //     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
 //   },
 // });
@@ -35,18 +27,6 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage }).single("image");
 
 const handlingUpload = (request, response, next) => {
-  const { role } = request.decodeToken;
-
-  // cek role user
-  if (role !== "admin") {
-    return helperWrapper.response(
-      response,
-      400,
-      "Sorry, only admin can create movie data",
-      null
-    );
-  }
-
   upload(request, response, (error) => {
     if (error instanceof multer.MulterError) {
       return helperWrapper.response(response, 401, error.message, null);

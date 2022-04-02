@@ -14,7 +14,6 @@ module.exports = {
       if (error) {
         return helperWrapper.response(response, 403, error.message, null);
       }
-      console.log(result);
 
       request.decodeToken = result;
       return next();
@@ -33,14 +32,9 @@ module.exports = {
       if (error) {
         return helperWrapper.response(response, 403, error.message, null);
       }
-      console.log(result);
 
       request.decodeToken = result;
       return next();
     });
   },
-  //   isAdmin
-  //   bisa pake decodeToken
-  //   apakah user yg login adalah admin
-  //   jika iya, maka lanjut ke controller, jika tidak kasih pesan error
 };
