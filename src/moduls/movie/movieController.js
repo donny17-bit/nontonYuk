@@ -184,17 +184,6 @@ module.exports = {
 
   deleteMovies: async (request, response) => {
     try {
-      const { role } = request.decodeToken;
-
-      // cek role user
-      if (role !== "admin") {
-        return helperWrapper.response(
-          response,
-          400,
-          "Sorry, only admin can create movie data",
-          null
-        );
-      }
       const { id } = request.params;
       const cekId = await movieModel.getMovieById(id);
 

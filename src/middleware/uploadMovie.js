@@ -35,18 +35,6 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage }).single("image");
 
 const handlingUpload = (request, response, next) => {
-  const { role } = request.decodeToken;
-
-  // cek role user
-  if (role !== "admin") {
-    return helperWrapper.response(
-      response,
-      400,
-      "Sorry, only admin can create movie data",
-      null
-    );
-  }
-
   upload(request, response, (error) => {
     if (error instanceof multer.MulterError) {
       return helperWrapper.response(response, 401, error.message, null);
