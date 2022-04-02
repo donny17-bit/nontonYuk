@@ -29,10 +29,21 @@ const storage = new CloudinaryStorage({
 //   },
 // });
 
-// bikin limit dan ektenesi di middleware
 // file filter implement express multer kata kunci
 
-const upload = multer({ storage }).single("image");
+const upload = multer({
+  storage,
+  fileFilter(request, file, callback) {
+    const { mimetype } = file;
+    if (mimetype !== "image/png" && mimetype !== "image/jpeg") {
+      return callback(new Error("File harus berekstensi png atau jpg"));
+    }
+    return callback(null, true);
+  },
+  limits: {
+    fileSize: 1024000,
+  },
+}).single("image");
 
 const handlingUpload = (request, response, next) => {
   upload(request, response, (error) => {

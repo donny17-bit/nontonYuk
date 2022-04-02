@@ -96,6 +96,7 @@ module.exports = {
   createMovies: async (request, response) => {
     try {
       const { filename } = request.file;
+      // console.log(request.file);
       const {
         name,
         category,
