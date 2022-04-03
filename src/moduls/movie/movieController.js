@@ -6,18 +6,16 @@ const movieModel = require("./movieModel");
 module.exports = {
   getAllMovie: async (request, response) => {
     try {
-      // console.log(request.decodeToken);
-      // let {} = request.query;
       let { page, limit, sort, searchName } = request.query;
 
-      // cek page kosong atau tidack
+      // check is page empty or not
       if (page) {
         page = Number(page);
       } else {
         page = 1;
       }
 
-      // cek limit kosong atau tidack
+      // check is limit empty or not
       if (limit) {
         limit = Number(limit);
       } else {
@@ -25,17 +23,15 @@ module.exports = {
       }
 
       if (!sort) {
-        sort = "name";
+        sort = "id";
       }
 
-      if (searchName === undefined) {
+      if (!searchName) {
         searchName = "";
       }
-      // 1. offset
+
       const offset = page * limit - limit;
-      // 2. total data
-      const totalData = await movieModel.getTotalMovies();
-      // 3. total page
+      const totalData = await movieModel.getTotalMovies(searchName);
       const totalPage = Math.ceil(totalData / limit);
 
       const pageInfo = {
@@ -44,6 +40,7 @@ module.exports = {
         limit,
         totalData,
       };
+
       const result = await movieModel.getAllMovies(
         searchName,
         sort,
@@ -65,8 +62,6 @@ module.exports = {
 
   getMovieById: async (request, response) => {
     try {
-      // console.log(request.params);
-
       const { id } = request.params;
       const result = await movieModel.getMovieById(id);
 
@@ -163,7 +158,6 @@ module.exports = {
 
       // eslint-disable-next-line no-restricted-syntax
       for (const data in setData) {
-        // if (!setData[data] === undefined) {
         if (!setData[data]) {
           delete setData[data];
         }

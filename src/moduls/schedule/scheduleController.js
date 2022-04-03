@@ -30,7 +30,10 @@ module.exports = {
       }
 
       const offset = page * limit - limit;
-      const totalData = await scheduleModel.getTotalSchedule();
+      const totalData = await scheduleModel.getTotalSchedule(
+        searchLocation,
+        searchMovieId
+      );
       const totalPage = Math.ceil(totalData / limit);
 
       const pageInfo = {
