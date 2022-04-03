@@ -49,8 +49,6 @@ const handlingUpload = (request, response, next) => {
   upload(request, response, (error) => {
     if (error instanceof multer.MulterError) {
       return helperWrapper.response(response, 401, error.message, null);
-      // limit = file to large => error limit
-      // extensi = custom
       // A Multer error occurred when uploading.
     }
     if (error) {

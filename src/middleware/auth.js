@@ -36,6 +36,7 @@ module.exports = {
         null
       );
     }
+
     return next();
 
     // token = token.split(" ")[1];

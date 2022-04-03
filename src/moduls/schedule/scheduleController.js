@@ -4,6 +4,7 @@ const scheduleModel = require("./scheduleModel");
 module.exports = {
   getAllSchedule: async (request, response) => {
     try {
+      // msh ngebug
       const { searchLocation } = request.query;
       let { page, limit, searchMovieId, sort } = request.query;
 
@@ -21,7 +22,7 @@ module.exports = {
         limit = 5;
       }
 
-      if (sort === undefined) {
+      if (!sort) {
         sort = "location";
       }
       // dibikin falsy (!) = if (!sort) { blabla}

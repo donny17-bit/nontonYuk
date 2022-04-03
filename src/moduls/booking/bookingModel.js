@@ -77,4 +77,40 @@ module.exports = {
         }
       );
     }),
+
+  getBookingSeat: (data) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT bs.seat FROM bookingseat AS bs 
+        INNER JOIN booking AS b on bs.bookingId = b.id 
+        WHERE b.scheduleId = ? 
+        AND b.dateBooking = ? 
+        AND b.timeBooking = ?`,
+        [data.scheduleId, data.dateBooking, data.timeBooking],
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
+
+  getBookingDashboard: (data) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT MONTH(b.createdAt) AS month, SUM(b.totalPayment) AS total FROM booking AS b
+        JOIN schedule AS s ON b.scheduleId = s.id WHERE b.scheduleId = ? 
+        AND s.movieId = ? AND s.location = ? GROUP BY month`,
+        [data.scheduleId, data.movieId, data.location],
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
 };
