@@ -113,4 +113,20 @@ module.exports = {
         }
       );
     }),
+
+  updateStatusBooking: (id) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "UPDATE booking SET statusUsed = 'notActive' WHERE id = ?",
+        id,
+        (error) => {
+          if (!error) {
+            const newResult = { id };
+            resolve(newResult);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
 };

@@ -11,7 +11,6 @@ Router.get("/seat", bookingController.getBookingSeat);
 Router.get("/dashboard", bookingController.getBookingDashboard);
 Router.get("/id/:id", bookingController.getBookingById);
 Router.post("/", bookingController.createBooking);
-// Router.patch("/:id", scheduleController.updateSchedule);
-// Router.delete("/:id", scheduleController.deleteSchedule);
+Router.patch("/ticket/:id", bookingController.updateStatusBooking);
 
 module.exports = Router;

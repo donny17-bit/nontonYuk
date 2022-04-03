@@ -162,4 +162,27 @@ module.exports = {
       return helperWrapper.response(response, 400, "bad request", null);
     }
   },
+
+  updateStatusBooking: async (request, response) => {
+    try {
+      const { id } = request.params;
+
+      // cek statusUsed is still active or not
+      const cekStatus = await bookingModel.getBookingById(id);
+      if (cekStatus[0].statusUsed === "notActive") {
+        return helperWrapper.response(
+          response,
+          400,
+          "sorry, ticket have been used",
+          null
+        );
+      }
+
+      const result = await bookingModel.updateStatusBooking(id);
+
+      return helperWrapper.response(response, 200, "sukses use ticket", result);
+    } catch (error) {
+      return helperWrapper.response(response, 400, "bad request", null);
+    }
+  },
 };
