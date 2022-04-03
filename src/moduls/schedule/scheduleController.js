@@ -4,18 +4,17 @@ const scheduleModel = require("./scheduleModel");
 module.exports = {
   getAllSchedule: async (request, response) => {
     try {
-      // msh ngebug
-      const { searchLocation } = request.query;
-      let { page, limit, searchMovieId, sort } = request.query;
+      const { searchMovieId } = request.query;
+      let { page, limit, searchLocation, sort } = request.query;
 
-      // cek page kosong atau tidack
+      // check is page empty or not
       if (page) {
         page = Number(page);
       } else {
         page = 1;
       }
 
-      // cek limit kosong atau tidack
+      // check is limit empty or not
       if (limit) {
         limit = Number(limit);
       } else {
@@ -23,18 +22,11 @@ module.exports = {
       }
 
       if (!sort) {
-        sort = "location";
+        sort = "id";
       }
-      // dibikin falsy (!) = if (!sort) { blabla}
 
-      // cek apakah salah satu dari searchMovieId / searchLocation ada atau tidak
-      // agar tidak salah di querynya
-      if (searchMovieId === undefined) {
-        if (searchLocation) {
-          searchMovieId = undefined;
-        } else {
-          searchMovieId = "";
-        }
+      if (!searchLocation) {
+        searchLocation = "";
       }
 
       const offset = page * limit - limit;
