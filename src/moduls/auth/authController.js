@@ -57,6 +57,16 @@ module.exports = {
         );
       }
 
+      // cek user sudah activate belum
+      if (cekEmail[0].status !== "active") {
+        return helperWrapper.response(
+          response,
+          400,
+          "silahkan lakukan aktivasi email terlebih dahulu",
+          null
+        );
+      }
+
       // 2. jika password salah
       // encripsi password pake bcryptjs
       if (!bcrypt.compareSync(password, cekEmail[0].password)) {
@@ -73,6 +83,35 @@ module.exports = {
         id: payload.id,
         token,
       });
+    } catch (error) {
+      return helperWrapper.response(response, 400, "bad request", null);
+    }
+  },
+
+  // activate user masih manual (-)
+  // belum bisa kirim link ke email user
+  activate: async (request, response) => {
+    try {
+      const { id } = request.params;
+      const cekIdUser = await authModel.getUserById(id);
+
+      //   1. jika user tidak ada di database
+      if (cekIdUser.length < 1) {
+        return helperWrapper.response(
+          response,
+          400,
+          "user tidak ditemukan",
+          null
+        );
+      }
+
+      const result = await authModel.activate(id, cekIdUser[0]);
+      return helperWrapper.response(
+        response,
+        200,
+        "success activate user",
+        result
+      );
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);
     }
