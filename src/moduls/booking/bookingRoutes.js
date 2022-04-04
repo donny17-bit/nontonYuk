@@ -3,14 +3,41 @@ const express = require("express");
 const Router = express.Router();
 
 const bookingController = require("./bookingController");
+const middlewareAuth = require("../../middleware/auth");
 
-// lengkapi authentikasi
-Router.get("/", bookingController.getAllBooking);
-Router.get("/user/:userId", bookingController.getBookingByUserId);
-Router.get("/seat", bookingController.getBookingSeat);
-Router.get("/dashboard", bookingController.getBookingDashboard);
-Router.get("/id/:id", bookingController.getBookingById);
-Router.post("/", bookingController.createBooking);
-Router.patch("/ticket/:id", bookingController.updateStatusBooking);
+// Router.get("/", bookingController.getAllBooking);
+Router.get(
+  "/user/:userId",
+  middlewareAuth.authentication,
+  bookingController.getBookingByUserId
+);
+Router.get(
+  "/seat",
+  middlewareAuth.authentication,
+  middlewareAuth.isAdmin,
+  bookingController.getBookingSeat
+);
+Router.get(
+  "/dashboard",
+  middlewareAuth.authentication,
+  middlewareAuth.isAdmin,
+  bookingController.getBookingDashboard
+);
+Router.get(
+  "/id/:id",
+  middlewareAuth.authentication,
+  bookingController.getBookingById
+);
+Router.post(
+  "/",
+  middlewareAuth.authentication,
+  bookingController.createBooking
+);
+Router.patch(
+  "/ticket/:id",
+  middlewareAuth.authentication,
+  middlewareAuth.isAdmin,
+  bookingController.updateStatusBooking
+);
 
 module.exports = Router;

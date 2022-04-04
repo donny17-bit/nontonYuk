@@ -22,7 +22,6 @@ module.exports = {
 
   updateUserProfile: async (request, response) => {
     try {
-      // udah tapi belum ada autentikasi
       const { id } = request.params;
       const cekIdUser = await userModel.getUserById(id);
 
@@ -58,7 +57,6 @@ module.exports = {
 
   updateUserPassword: async (request, response) => {
     try {
-      // udah tapi belum ada autentikasi
       const { id } = request.params;
       const cekIdUser = await userModel.getUserById(id);
 
@@ -105,7 +103,6 @@ module.exports = {
 
   updateUserImage: async (request, response) => {
     try {
-      // udah tapi belum ada autentikasi
       const { id } = request.params;
       const cekIdUser = await userModel.getUserById(id);
 
@@ -118,6 +115,7 @@ module.exports = {
         );
       }
 
+      // kurang delete image user di cloudinary
       const { filename } = request.file;
 
       const setData = {

@@ -2,19 +2,19 @@ const helperWrapper = require("../../helpers/wrapper");
 const bookingModel = require("./bookingModel");
 
 module.exports = {
-  getAllBooking: async (request, response) => {
-    try {
-      const result = await bookingModel.getAllBooking();
-      return helperWrapper.response(
-        response,
-        200,
-        `sukses get booking`,
-        result
-      );
-    } catch (error) {
-      return helperWrapper.response(response, 400, "bad request", null);
-    }
-  },
+  // getAllBooking: async (request, response) => {
+  //   try {
+  //     const result = await bookingModel.getAllBooking();
+  //     return helperWrapper.response(
+  //       response,
+  //       200,
+  //       `sukses get booking`,
+  //       result
+  //     );
+  //   } catch (error) {
+  //     return helperWrapper.response(response, 400, "bad request", null);
+  //   }
+  // },
 
   getBookingById: async (request, response) => {
     try {

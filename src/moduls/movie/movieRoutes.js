@@ -20,7 +20,7 @@ Router.post(
   middlewareAuth.isAdmin,
   middlewareUpload,
   movieController.createMovies
-); // authentication, isAdmin
+);
 
 Router.patch(
   "/:id",
@@ -29,13 +29,13 @@ Router.patch(
   middlewareUpload,
   // middlewareRedis.clearMovieRedis,
   movieController.updateMovies
-); // authentication, isAdmin
+);
 
 Router.delete(
   "/:id",
   middlewareAuth.authentication,
   middlewareAuth.isAdmin,
   movieController.deleteMovies
-); // authentication, isAdmin
+);
 
 module.exports = Router;

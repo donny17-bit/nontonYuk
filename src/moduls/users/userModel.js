@@ -8,6 +8,7 @@ module.exports = {
         id,
         (error, result) => {
           if (!error) {
+            delete result[0].password;
             resolve(result);
           } else {
             reject(new Error(error.sqlMessage));
