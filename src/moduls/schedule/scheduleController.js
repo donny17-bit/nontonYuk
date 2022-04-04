@@ -1,5 +1,6 @@
 const helperWrapper = require("../../helpers/wrapper");
 const scheduleModel = require("./scheduleModel");
+const redis = require("../../config/redis");
 
 module.exports = {
   getAllSchedule: async (request, response) => {
@@ -51,6 +52,12 @@ module.exports = {
         offset
       );
 
+      redis.setEx(
+        `getSchedule:${JSON.stringify(request.query)}`,
+        3600,
+        JSON.stringify({ result, pageInfo })
+      );
+
       return helperWrapper.response(
         response,
         200,
@@ -67,6 +74,8 @@ module.exports = {
     try {
       const { id } = request.params;
       const result = await scheduleModel.getScheduleById(id);
+
+      redis.setEx(`getSchedule:${id}`, 3600, JSON.stringify(result));
 
       return helperWrapper.response(
         response,

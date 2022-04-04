@@ -174,6 +174,7 @@ module.exports = {
         }
       }
 
+      // kasih kondisi jika di cloudinary masih ada image atau ngga?
       // cloudinary.uploader.destroy(cekId[0].image, () => {
       //   console.log("data berhasil di delete di cloudinary");
       // });

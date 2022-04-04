@@ -9,7 +9,7 @@ const middlewareRedis = require("../../middleware/redis");
 
 Router.get(
   "/",
-  middlewareAuth.authentication,
+  // middlewareAuth.authentication,
   middlewareRedis.getMovieRedis,
   movieController.getAllMovie
 );

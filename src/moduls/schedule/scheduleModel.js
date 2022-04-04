@@ -77,7 +77,11 @@ module.exports = {
         [data, id],
         (error, result) => {
           if (!error) {
-            resolve(result);
+            const newResult = {
+              id: result.id,
+              ...data,
+            };
+            resolve(newResult);
           } else {
             reject(new Error(error.sqlMessage));
           }
@@ -92,7 +96,10 @@ module.exports = {
         id,
         (error, result) => {
           if (!error) {
-            resolve(result);
+            const newResult = {
+              id: result.id,
+            };
+            resolve(newResult);
           } else {
             reject(new Error(error.sqlMessage));
           }
