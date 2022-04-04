@@ -32,7 +32,7 @@ Router.patch(
   middlewareAuth.authentication,
   middlewareAuth.isAdmin,
   middlewareUpload,
-  // middlewareRedis.clearMovieRedis,
+  middlewareRedis.clearMovieRedis,
   movieController.updateMovies
 );
 
@@ -40,7 +40,7 @@ Router.delete(
   "/:id",
   middlewareAuth.authentication,
   middlewareAuth.isAdmin,
-  // middlewareRedis.clearMovieRedis,
+  middlewareRedis.clearMovieRedis,
   movieController.deleteMovies
 );
 

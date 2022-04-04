@@ -86,15 +86,13 @@ module.exports = {
       }
 
       // proses menyimpan ke redis
-      redis.setEx(`getMovie:${JSON}`, 3600, JSON.stringify(result[0]));
-
-      // console.log(JSON);
+      redis.setEx(`getMovie:${id}`, 3600, JSON.stringify(result));
 
       return helperWrapper.response(
         response,
         200,
         "sukses get data by id",
-        result[0]
+        result
       );
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);
@@ -175,6 +173,10 @@ module.exports = {
           delete setData[data];
         }
       }
+
+      // cloudinary.uploader.destroy(cekId[0].image, () => {
+      //   console.log("data berhasil di delete di cloudinary");
+      // });
 
       const result = await movieModel.updateMovies(id, setData);
 
