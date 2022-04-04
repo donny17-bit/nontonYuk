@@ -53,6 +53,12 @@ module.exports = {
         searchRelease
       );
 
+      redis.setEx(
+        `getMovie:${JSON.stringify(request.query)}`,
+        3600,
+        JSON.stringify({ result, pageInfo })
+      );
+
       return helperWrapper.response(
         response,
         200,
@@ -80,13 +86,15 @@ module.exports = {
       }
 
       // proses menyimpan ke redis
-      redis.setEx(`getMovie:${JSON}`, 3600, JSON.stringify(result));
+      redis.setEx(`getMovie:${JSON}`, 3600, JSON.stringify(result[0]));
+
+      // console.log(JSON);
 
       return helperWrapper.response(
         response,
         200,
         "sukses get data by id",
-        result
+        result[0]
       );
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);
