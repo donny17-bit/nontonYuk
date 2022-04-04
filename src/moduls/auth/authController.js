@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 const helperWrapper = require("../../helpers/wrapper");
 const authModel = require("./authModel");
 
@@ -34,8 +35,25 @@ module.exports = {
       // encrypt password
       const hash = bcrypt.hashSync(password);
 
+      const transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email",
+        port: 587,
+        auth: {
+          user: "arely.waelchi25@ethereal.email",
+          pass: "tMdSuNwJ79EFrPB1Q2",
+        },
+      });
+
       setData = { ...setData, password: hash };
       const result = await authModel.register(setData);
+      const info = await transporter.sendMail({
+        from: '"nontonYuk" <no-reply@nontonyuk.com>', // sender address
+        to: setData.email, // list of receivers
+        subject: "Account Verification", // Subject line
+        text: "this is your verification link, please click link down below", // plain text body
+        html: `<a href="localhost:3001/auth/activate/${result.id}"> Verify your account </a>`, // html body
+      });
+      console.log("Message sent: %s", info.messageId);
       return helperWrapper.response(response, 200, "sukses register", result);
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);
