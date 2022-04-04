@@ -6,6 +6,7 @@ const movieModel = require("./movieModel");
 module.exports = {
   getAllMovie: async (request, response) => {
     try {
+      const { searchRelease } = request.query;
       let { page, limit, sort, searchName } = request.query;
 
       // check is page empty or not
@@ -31,7 +32,10 @@ module.exports = {
       }
 
       const offset = page * limit - limit;
-      const totalData = await movieModel.getTotalMovies(searchName);
+      const totalData = await movieModel.getTotalMovies(
+        searchName,
+        searchRelease
+      );
       const totalPage = Math.ceil(totalData / limit);
 
       const pageInfo = {
@@ -45,7 +49,8 @@ module.exports = {
         searchName,
         sort,
         limit,
-        offset
+        offset,
+        searchRelease
       );
 
       return helperWrapper.response(
