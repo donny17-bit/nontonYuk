@@ -1,10 +1,9 @@
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
-  // taro di .env
-  cloud_name: "dusoicuhh",
-  api_key: "449481672742389",
-  api_secret: "w5pjesu1v-NczD9tltWJJ1LcmSs",
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 module.exports = cloudinary;
