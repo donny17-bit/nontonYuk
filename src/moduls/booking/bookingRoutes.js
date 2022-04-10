@@ -39,4 +39,10 @@ Router.patch(
   bookingController.updateStatusBooking
 );
 
+// blm dikasih autentikasi
+Router.post(
+  "/midtrans-notification",
+  bookingController.postMidtransNotification
+);
+
 module.exports = Router;

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { v4: uuidv4 } = require("uuid");
 const helperWrapper = require("../../helpers/wrapper");
 const authModel = require("./authModel");
 const { sendMail } = require("../../helpers/mail");
@@ -14,7 +15,9 @@ module.exports = {
 
       const { email, firstName, lastName, password, noTelp } = request.body;
 
+      // uuid baru di register doang / table user di db
       let setData = {
+        id: uuidv4(),
         email,
         firstName,
         lastName,
