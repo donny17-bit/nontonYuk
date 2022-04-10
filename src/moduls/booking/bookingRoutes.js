@@ -14,7 +14,6 @@ Router.get(
 Router.get(
   "/seat",
   middlewareAuth.authentication,
-  middlewareAuth.isAdmin,
   bookingController.getBookingSeat
 );
 Router.get(

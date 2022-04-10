@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
 const helperWrapper = require("../../helpers/wrapper");
 const authModel = require("./authModel");
+const { sendMail } = require("../../helpers/mail");
+const redis = require("../../config/redis");
 
 module.exports = {
   register: async (request, response) => {
@@ -35,25 +36,19 @@ module.exports = {
       // encrypt password
       const hash = bcrypt.hashSync(password);
 
-      const transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        auth: {
-          user: "arely.waelchi25@ethereal.email",
-          pass: "tMdSuNwJ79EFrPB1Q2",
-        },
-      });
-
       setData = { ...setData, password: hash };
+
       const result = await authModel.register(setData);
-      const info = await transporter.sendMail({
-        from: '"nontonYuk" <no-reply@nontonyuk.com>', // sender address
-        to: setData.email, // list of receivers
-        subject: "Account Verification", // Subject line
-        text: "this is your verification link, please click link down below", // plain text body
-        html: `<a href="localhost:3001/auth/activate/${result.id}"> Verify your account </a>`, // html body
-      });
-      console.log("Message sent: %s", info.messageId);
+
+      const setSendEmail = {
+        to: email,
+        subject: "Email Verification !",
+        name: firstName,
+        template: "verificationEmail.html",
+        link: `google.com`,
+      };
+      await sendMail(setSendEmail);
+
       return helperWrapper.response(response, 200, "sukses register", result);
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);
@@ -96,13 +91,55 @@ module.exports = {
       delete payload.password;
 
       // RAHASIA merupakan secret key/nama kunci (nama bebas)
-      const token = jwt.sign({ ...payload }, "RAHASIA", { expiresIn: "24hr" });
+      const token = jwt.sign({ ...payload }, "RAHASIA", {
+        expiresIn: "1hr",
+      });
+      const refreshToken = jwt.sign({ ...payload }, "RAHASIABARU", {
+        expiresIn: "24h",
+      });
+
       return helperWrapper.response(response, 200, "success login", {
         id: payload.id,
         token,
+        refreshToken,
       });
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);
+    }
+  },
+
+  refresh: async (request, response) => {
+    try {
+      const { refreshToken } = request.body;
+      const checkToken = await redis.get(`refreshToken:${refreshToken}`);
+      if (checkToken) {
+        return helperWrapper.response(
+          response,
+          403,
+          "Your refresh token cannot be use",
+          null
+        );
+      }
+      jwt.verify(refreshToken, "RAHASIABARU", async (error, result) => {
+        delete result.iat;
+        delete result.exp;
+        const token = jwt.sign(result, "RAHASIA", { expiresIn: "1h" });
+        const newRefreshToken = jwt.sign(result, "RAHASIABARU", {
+          expiresIn: "24h",
+        });
+        await redis.setEx(
+          `refreshToken:${refreshToken}`,
+          3600 * 48,
+          refreshToken
+        );
+        return helperWrapper.response(response, 200, "Success refresh token", {
+          id: result.id,
+          token,
+          refreshToken: newRefreshToken,
+        });
+      });
+    } catch (error) {
+      return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
 
@@ -132,6 +169,19 @@ module.exports = {
       );
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);
+    }
+  },
+
+  logout: async (request, response) => {
+    try {
+      let token = request.headers.authorization;
+      const { refreshToken } = request.body;
+      token = token.split(" ")[1];
+      redis.setEx(`accessToken:${token}`, 3600 * 24, token);
+      redis.setEx(`refreshToken:${refreshToken}`, 3600 * 24, token);
+      return helperWrapper.response(response, 200, "Success logout", null);
+    } catch (error) {
+      return helperWrapper.response(response, 400, "Bad Request", null);
     }
   },
 };

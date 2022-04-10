@@ -2,7 +2,6 @@ const connection = require("../../config/mySql");
 
 module.exports = {
   getTotalSchedule: (searchLocation, searchMovieId) =>
-    // masih salah bisa tanya arin atau teguh (lupa soale :v)
     new Promise((resolve, reject) => {
       const query = `SELECT COUNT(*) AS total FROM schedule AS s 
       JOIN movies AS m on m.id = s.movieId
