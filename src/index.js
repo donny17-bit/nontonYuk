@@ -5,13 +5,13 @@ const helmet = require("helmet");
 const xss = require("xss-clean");
 const compression = require("compression");
 const bodyParser = require("body-parser");
-// const env = require("dotenv").config();
+const env = require("dotenv").config();
 
 // routes --
 const routerNavigation = require("./routes");
 
 const app = express();
-const { port } = process.env.PORT;
+const port = env.parsed.PORT;
 
 // middleware
 app.use(morgan("dev"));
