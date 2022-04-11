@@ -11,7 +11,7 @@ const env = require("dotenv").config();
 const routerNavigation = require("./routes");
 
 const app = express();
-const port = env.parsed.PORT;
+const port = process.env.PORT;
 
 // middleware
 app.use(morgan("dev"));
