@@ -112,6 +112,7 @@ module.exports = {
         synopsis,
       } = request.body;
 
+      console.log(request.file);
       const setData = {
         name,
         category,
@@ -123,8 +124,8 @@ module.exports = {
         synopsis,
       };
 
-      const result = await movieModel.createMovies(setData);
-      return helperWrapper.response(response, 200, "sukses post data", result);
+      // const result = await movieModel.createMovies(setData);
+      return helperWrapper.response(response, 200, "sukses post data", null);
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);
     }
