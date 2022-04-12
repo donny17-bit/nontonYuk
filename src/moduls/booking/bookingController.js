@@ -163,7 +163,7 @@ module.exports = {
 
       const resultMidtrans = await helperMidtrans.post(setDataMidtrans);
       return helperWrapper.response(response, 200, `sukses create booking`, {
-        id: 1,
+        id: 5,
         ...request.body,
         redirectUrl: resultMidtrans.redirect_url,
       });
