@@ -23,7 +23,7 @@ Router.post(
   "/",
   middlewareAuth.authentication,
   middlewareAuth.isAdmin,
-  // middlewareUpload,
+  middlewareUpload,
   movieController.createMovies
 );
 
