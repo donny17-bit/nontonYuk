@@ -199,6 +199,7 @@ module.exports = {
             statusPayment: "PENDING",
             // updatedAt: ...
           };
+          await bookingModel.updateBooking(orderId, setData);
         } else if (fraudStatus == "accept") {
           // TODO set transaction status on your databaase to 'success'
           // UBAH STATUS PEMBAYARAN MENJADI SUCCESS
@@ -208,6 +209,7 @@ module.exports = {
             statusPayment: "SUCCESS",
             // updatedAt: ...
           };
+          await bookingModel.updateBooking(orderId, setData);
         }
       } else if (transactionStatus == "settlement") {
         // TODO set transaction status on your databaase to 'success'
@@ -218,6 +220,7 @@ module.exports = {
           statusPayment: "SUCCESS",
           // updatedAt: ...
         };
+        await bookingModel.updateBooking(orderId, setData);
         console.log(
           `Sukses melakukan pembayaran dengan id ${orderId} dan data yang diubah ${JSON.stringify(
             setData
@@ -227,15 +230,33 @@ module.exports = {
         // TODO you can ignore 'deny', because most of the time it allows payment retries
         // and later can become success
         // UBAH STATUS PEMBAYARAN MENJADI FAILED
+        const setData = {
+          paymentMethod: result.payment_type,
+          statusPayment: "FAILED",
+          // updatedAt: ...
+        };
+        await bookingModel.updateBooking(orderId, setData);
       } else if (
         transactionStatus == "cancel" ||
         transactionStatus == "expire"
       ) {
         // TODO set transaction status on your databaase to 'failure'
         // UBAH STATUS PEMBAYARAN MENJADI FAILED
+        const setData = {
+          paymentMethod: result.payment_type,
+          statusPayment: "FAILED",
+          // updatedAt: ...
+        };
+        await bookingModel.updateBooking(orderId, setData);
       } else if (transactionStatus == "pending") {
         // TODO set transaction status on your databaase to 'pending' / waiting payment
         // UBAH STATUS PEMBAYARAN MENJADI PENDING
+        const setData = {
+          paymentMethod: result.payment_type,
+          statusPayment: "PENDING",
+          // updatedAt: ...
+        };
+        await bookingModel.updateBooking(orderId, setData);
       }
     } catch (error) {
       return helperWrapper.response(response, 400, "Bad Request", null);

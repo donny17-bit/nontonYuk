@@ -26,7 +26,7 @@ module.exports = {
           // transaction token
           // const transactionToken = transaction.token;
           // console.log("transactionToken:", transactionToken);
-          //   console.log(transaction);
+          // console.log(transaction);
           //   {
           //     token: '77af457d-84a1-4eaa-8b42-49c2f0a1f7c3',
           //     redirect_url: 'https://app.sandbox.midtrans.com/snap/v2/vtweb/77af457d-84a1-4eaa-8b42-49c2f0a1f7c3'

@@ -129,4 +129,20 @@ module.exports = {
         }
       );
     }),
+
+  updateBooking: (id, data) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "UPDATE booking SET ? WHERE id = ?",
+        [data, id],
+        (error) => {
+          if (!error) {
+            const newResult = { id };
+            resolve(newResult);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
+        }
+      );
+    }),
 };
