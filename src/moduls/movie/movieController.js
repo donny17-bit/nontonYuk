@@ -120,7 +120,7 @@ module.exports = {
         synopsis,
       } = request.body;
 
-      console.log(request.file);
+      console.log(filename);
       const setData = {
         name,
         category,
