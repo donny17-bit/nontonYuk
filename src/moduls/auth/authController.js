@@ -146,8 +146,6 @@ module.exports = {
     }
   },
 
-  // activate user masih manual (-)
-  // belum bisa kirim link ke email user
   activate: async (request, response) => {
     try {
       const { id } = request.params;

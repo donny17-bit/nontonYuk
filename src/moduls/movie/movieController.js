@@ -144,6 +144,9 @@ module.exports = {
         );
       }
 
+      // cek di req.file ada image atau tidak
+      // didalam kondisi
+
       const { filename } = request.file;
       const {
         name,
@@ -206,6 +209,7 @@ module.exports = {
         );
       }
 
+      // cek jika di cloudiinaru msh ada image atau tidak (dari DB)
       // (error, result) => {console.log(result, error)}
       cloudinary.uploader.destroy(cekId[0].image, () => {
         console.log("data berhasil di delete di cloudinary");

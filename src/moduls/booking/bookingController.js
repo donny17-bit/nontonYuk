@@ -149,6 +149,7 @@ module.exports = {
 
       const result = await bookingModel.createBooking(setDataBooking);
 
+      // uuid dari sini
       const bookingId = result.id;
 
       seat.map(async (value) => {
@@ -172,7 +173,6 @@ module.exports = {
     }
   },
 
-  // dilanjut nanti
   postMidtransNotification: async (request, response) => {
     try {
       console.log(request.body);
