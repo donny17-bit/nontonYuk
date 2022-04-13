@@ -124,14 +124,13 @@ module.exports = {
         );
       }
 
-      console.log(`nontonYuk/user/${cekIdUser[0].image}`);
-      if (cekIdUser[0].image) {
-        cloudinary.uploader.destroy(
-          `nontonYuk/user/${cekIdUser[0].image}`,
-          () => {
-            console.log("data has been deleted in cloudinary");
-          }
-        );
+      const { image } = cekIdUser[0];
+      console.log(image);
+      console.log(image.slice(-4));
+      if (image) {
+        cloudinary.uploader.destroy(image.slice(-4), () => {
+          console.log("data has been deleted in cloudinary");
+        });
       }
 
       const setData = {
