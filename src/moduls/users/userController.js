@@ -126,9 +126,9 @@ module.exports = {
 
       const { image } = cekIdUser[0];
       console.log(image);
-      console.log(image.slice(-4));
+      console.log(image.slice(0, image.length-4));
       if (image) {
-        cloudinary.uploader.destroy(image.slice(-4), () => {
+        cloudinary.uploader.destroy(image.slice(0, image.length-4)), () => {
           console.log("data has been deleted in cloudinary");
         });
       }
