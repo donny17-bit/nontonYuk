@@ -105,7 +105,6 @@ module.exports = {
     try {
       const { id } = request.params;
       const cekIdUser = await userModel.getUserById(id);
-      // kurang delete image user di cloudinary
       let { filename } = request.file;
       const { mimetype } = request.file;
 
@@ -125,8 +124,7 @@ module.exports = {
       }
 
       const { image } = cekIdUser[0];
-      console.log(image);
-      console.log(image.slice(0, image.length - 4));
+
       if (image) {
         cloudinary.uploader.destroy(image.slice(0, image.length - 4), () => {
           console.log("data has been deleted in cloudinary");

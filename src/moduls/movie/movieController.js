@@ -155,7 +155,15 @@ module.exports = {
       // cek di req.file ada image atau tidak
       // didalam kondisi
 
-      const { filename } = request.file;
+      const { mimetype } = request.file;
+      let { filename } = request.file;
+
+      if (mimetype === "image/jpeg") {
+        filename += ".jpg";
+      } else if (mimetype === "image/png") {
+        filename += ".png";
+      }
+
       const {
         name,
         category,
@@ -185,10 +193,13 @@ module.exports = {
         }
       }
 
-      // kasih kondisi jika di cloudinary masih ada image atau ngga?
-      // cloudinary.uploader.destroy(cekId[0].image, () => {
-      //   console.log("data berhasil di delete di cloudinary");
-      // });
+      const { image } = cekId[0].image;
+
+      if (image) {
+        cloudinary.uploader.destroy(image.slice(0, image.length - 4), () => {
+          console.log("data has been deleted in cloudinary");
+        });
+      }
 
       const result = await movieModel.updateMovies(id, setData);
 
@@ -217,9 +228,10 @@ module.exports = {
         );
       }
 
-      // cek jika di cloudiinaru msh ada image atau tidak (dari DB)
-      if (cekId[0].image) {
-        cloudinary.uploader.destroy(cekId[0].image, () => {
+      const { image } = cekId[0].image;
+
+      if (image) {
+        cloudinary.uploader.destroy(image.slice(0, image.length - 4), () => {
           console.log("data has been deleted in cloudinary");
         });
       }
