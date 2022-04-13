@@ -1,7 +1,7 @@
-// const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const helperWrapper = require("../../helpers/wrapper");
 const userModel = require("./userModel");
+const cloudinary = require("../../config/cloudinary");
 
 module.exports = {
   getUserById: async (request, response) => {
@@ -105,6 +105,15 @@ module.exports = {
     try {
       const { id } = request.params;
       const cekIdUser = await userModel.getUserById(id);
+      // kurang delete image user di cloudinary
+      let { filename } = request.file;
+      const { mimetype } = request.file;
+
+      if (mimetype === "image/jpeg") {
+        filename += ".jpg";
+      } else if (mimetype === "image/png") {
+        filename += ".png";
+      }
 
       if (cekIdUser.length < 1) {
         return helperWrapper.response(
@@ -115,8 +124,11 @@ module.exports = {
         );
       }
 
-      // kurang delete image user di cloudinary
-      const { filename } = request.file;
+      if (cekIdUser[0].image) {
+        cloudinary.uploader.destroy(cekIdUser[0].image, () => {
+          console.log("data has been deleted in cloudinary");
+        });
+      }
 
       const setData = {
         image: filename,

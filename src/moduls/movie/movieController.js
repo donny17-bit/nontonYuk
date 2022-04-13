@@ -120,7 +120,6 @@ module.exports = {
         synopsis,
       } = request.body;
 
-      console.log(filename);
       const setData = {
         name,
         category,
@@ -132,8 +131,8 @@ module.exports = {
         synopsis,
       };
 
-      // const result = await movieModel.createMovies(setData);
-      return helperWrapper.response(response, 200, "sukses post data", null);
+      const result = await movieModel.createMovies(setData);
+      return helperWrapper.response(response, 200, "sukses post data", result);
     } catch (error) {
       return helperWrapper.response(response, 400, "bad request", null);
     }
@@ -219,10 +218,11 @@ module.exports = {
       }
 
       // cek jika di cloudiinaru msh ada image atau tidak (dari DB)
-      // (error, result) => {console.log(result, error)}
-      cloudinary.uploader.destroy(cekId[0].image, () => {
-        console.log("data berhasil di delete di cloudinary");
-      });
+      if (cekId[0].image) {
+        cloudinary.uploader.destroy(cekId[0].image, () => {
+          console.log("data has been deleted in cloudinary");
+        });
+      }
 
       const result = await movieModel.deleteMovies(id);
       return helperWrapper.response(
