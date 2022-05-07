@@ -24,8 +24,6 @@ module.exports = {
         noTelp,
       };
 
-      // console.log(setData);
-
       // 2. proses kondisi, cek apakah email sudah terdaftar belum
       const cekEmail = await authModel.getUserByEmail(email);
 
@@ -56,7 +54,7 @@ module.exports = {
 
       return helperWrapper.response(response, 200, "sukses register", result);
     } catch (error) {
-      return helperWrapper.response(response, 400, error, null);
+      return helperWrapper.response(response, 400, "bad request", null);
     }
   },
 

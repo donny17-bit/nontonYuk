@@ -4,10 +4,9 @@ module.exports = {
   register: (data) =>
     new Promise((resolve, reject) => {
       connection.query("INSERT INTO user SET ?", data, (error, result) => {
-        // console.log(result);
         if (!error) {
           const newResult = {
-            // id: result.insertId,
+            id: result.insertId,
             ...data,
           };
           delete newResult.password;
