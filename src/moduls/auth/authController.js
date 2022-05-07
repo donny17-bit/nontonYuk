@@ -24,7 +24,7 @@ module.exports = {
         noTelp,
       };
 
-      console.log(setData);
+      // console.log(setData);
 
       // 2. proses kondisi, cek apakah email sudah terdaftar belum
       const cekEmail = await authModel.getUserByEmail(email);
