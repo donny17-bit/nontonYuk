@@ -43,12 +43,14 @@ module.exports = {
 
       const result = await authModel.register(setData);
 
+      const url = process.env.URL;
+
       const setSendEmail = {
         to: email,
         subject: "Email Verification !",
         name: firstName,
         template: "verificationEmail.html",
-        link: `google.com`,
+        link: `${url}/auth/activate/${result.id}`,
       };
       await sendMail(setSendEmail);
 
