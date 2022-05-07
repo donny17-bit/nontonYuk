@@ -230,6 +230,7 @@ module.exports = {
 
       const { image } = cekId[0].image;
 
+      // msih ngebug, di cloudinary blm kedelete pdhl dlu bsa
       if (image) {
         cloudinary.uploader.destroy(image.slice(0, image.length - 4), () => {
           console.log("data has been deleted in cloudinary");
