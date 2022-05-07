@@ -56,7 +56,7 @@ module.exports = {
 
       return helperWrapper.response(response, 200, "sukses register", result);
     } catch (error) {
-      return helperWrapper.response(response, 400, "bad request", null);
+      return helperWrapper.response(response, 400, error, null);
     }
   },
 

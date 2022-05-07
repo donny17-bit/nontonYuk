@@ -3,24 +3,19 @@ const connection = require("../../config/mySql");
 module.exports = {
   register: (data) =>
     new Promise((resolve, reject) => {
-      const query = connection.query(
-        "INSERT INTO user SET ?",
-        data,
-        (error, result) => {
-          console.log(result);
-          if (!error) {
-            const newResult = {
-              id: result.insertId,
-              ...data,
-            };
-            delete newResult.password;
-            resolve(newResult);
-          } else {
-            reject(new Error(error.sqlMessage));
-          }
+      connection.query("INSERT INTO user SET ?", data, (error, result) => {
+        // console.log(result);
+        if (!error) {
+          const newResult = {
+            // id: result.insertId,
+            ...data,
+          };
+          delete newResult.password;
+          resolve(newResult);
+        } else {
+          reject(new Error(error.sqlMessage));
         }
-      );
-      console.log(query);
+      });
     }),
   getUserByEmail: (email) =>
     new Promise((resolve, reject) => {
