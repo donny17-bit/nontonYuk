@@ -184,8 +184,6 @@ module.exports = {
       redis.setEx(`refreshToken:${refreshToken}`, 3600 * 24, token);
       return helperWrapper.response(response, 200, "Success logout", null);
     } catch (error) {
-      console.log(request.headers.authorization);
-      console.log(error);
       return helperWrapper.response(response, 400, "Bad request", null);
     }
   },
