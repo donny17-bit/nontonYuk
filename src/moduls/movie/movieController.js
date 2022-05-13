@@ -103,11 +103,12 @@ module.exports = {
   createMovies: async (request, response) => {
     try {
       let { filename } = request.file;
-      const { mimetype } = request.file;
+      // const { mimetype } = request.file;
+      const { type } = request.file;
 
-      if (mimetype === "image/jpeg") {
+      if (type === "image/jpeg") {
         filename += ".jpg";
-      } else if (mimetype === "image/png") {
+      } else if (type === "image/png") {
         filename += ".png";
       }
 
