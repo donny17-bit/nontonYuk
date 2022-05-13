@@ -4,9 +4,7 @@ module.exports = {
   getTotalMovies: (searchName, searchRelease) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT COUNT(*) AS total FROM movies ${
-          searchName ? `WHERE name LIKE '%${searchName}%'` : ``
-        } 
+        `SELECT COUNT(*) AS total FROM movies WHERE name LIKE '%${searchName}%'
         ${searchRelease ? `AND MONTH(releaseDate) = ${searchRelease}` : ``}`,
         (error, result) => {
           if (!error) {
