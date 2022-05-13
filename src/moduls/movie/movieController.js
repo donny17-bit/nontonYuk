@@ -99,6 +99,7 @@ module.exports = {
     }
   },
 
+  // msh bug, kalo bkn admin yg login dan file di isi tidak menampilkan error(harus admin can create movie)
   createMovies: async (request, response) => {
     try {
       let { filename } = request.file;
