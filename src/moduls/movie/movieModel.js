@@ -19,7 +19,8 @@ module.exports = {
   getAllMovies: (searchName, sort, limit, offset, searchRelease) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM movies WHERE name LIKE '%${searchName}%' 
+        `SELECT * FROM movies
+        ${searchName ? `WHERE name LIKE '%${searchName}%'` : ``}  
         ${
           searchRelease
             ? `AND MONTH(releaseDate) = ${searchRelease} 
