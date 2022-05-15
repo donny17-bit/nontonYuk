@@ -90,7 +90,7 @@ module.exports = {
 
   createSchedule: async (request, response) => {
     try {
-      const { movieId, premiere, price, location, dateStart, dateEnd } =
+      const { movieId, premiere, price, location, dateStart, dateEnd, time } =
         request.body;
       const setData = {
         movieId,
@@ -99,6 +99,7 @@ module.exports = {
         location,
         dateStart,
         dateEnd,
+        time,
       };
 
       const result = await scheduleModel.createSchedule(setData);
@@ -110,7 +111,8 @@ module.exports = {
         result
       );
     } catch (error) {
-      return helperWrapper.response(response, 400, "bad request", null);
+      return helperWrapper.response(response, 400, error, null);
+      // return helperWrapper.response(response, 400, "bad request", null);
     }
   },
 
