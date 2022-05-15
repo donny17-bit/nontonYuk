@@ -90,12 +90,15 @@ module.exports = {
 
   createSchedule: async (request, response) => {
     try {
-      const { movieId, premiere, price, location } = request.body;
+      const { movieId, premiere, price, location, dateStart, dateEnd } =
+        request.body;
       const setData = {
         movieId,
         premiere,
         price,
         location,
+        dateStart,
+        dateEnd,
       };
 
       const result = await scheduleModel.createSchedule(setData);
