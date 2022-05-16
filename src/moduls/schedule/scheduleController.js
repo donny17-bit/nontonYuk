@@ -130,12 +130,16 @@ module.exports = {
         );
       }
 
-      const { movieId, premiere, price, location } = request.body;
+      const { movieId, premiere, price, location, dateStart, dateEnd, time } =
+        request.body;
       const setData = {
         movieId,
         premiere,
         price,
         location,
+        dateStart,
+        dateEnd,
+        time,
       };
 
       const result = await scheduleModel.updateSchedule(id, setData);
