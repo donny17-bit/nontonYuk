@@ -30,6 +30,7 @@ module.exports = {
         searchLocation = "";
       }
 
+      // (-) bug, jika page set 1, limit ada isi, maka schedule id = id movie
       const offset = page * limit - limit;
       const totalData = await scheduleModel.getTotalSchedule(
         searchLocation,
