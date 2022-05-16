@@ -70,7 +70,6 @@ module.exports = {
 
       if (keys.length > 0) {
         keys.forEach(async (element) => {
-          // console.log(element);
           await redis.del(element);
         });
       }
