@@ -16,21 +16,20 @@ module.exports = {
       });
     }),
 
-  // WHERE s.location LIKE '%${searchLocation}%'
-  //   ${
-  //     searchMovieId
-  //       ? `AND s.movieId = ${searchMovieId} ORDER BY '${sort}'
-  //   LIMIT ? OFFSET ?`
-  //       : `ORDER BY '${sort}'
-  //   LIMIT ? OFFSET ?`
-  //   }`
   getAllSchedule: (searchLocation, searchMovieId, sort, limit, offset) =>
     new Promise((resolve, reject) => {
       const query = connection.query(
         `SELECT s.id, s.movieId, s.premiere, s.price, s.location, s.dateStart, s.dateEnd, s.time, 
       m.name, m.category, m.image, m.releaseDate, m.cast, m.director, m.synopsis, m.duration FROM schedule AS s 
       JOIN movies AS m on m.id = s.movieId
-      `,
+      WHERE s.location LIKE '%${searchLocation}%'
+      ${
+        searchMovieId
+          ? `AND s.movieId = ${searchMovieId} ORDER BY '${sort}'
+    LIMIT ? OFFSET ?`
+          : `ORDER BY '${sort}'
+    LIMIT ? OFFSET ?`
+      }`,
         [limit, offset],
         (error, result) => {
           if (!error) {
