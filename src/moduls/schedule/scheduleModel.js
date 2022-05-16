@@ -18,8 +18,8 @@ module.exports = {
 
   getAllSchedule: (searchLocation, searchMovieId, sort, limit, offset) =>
     new Promise((resolve, reject) => {
-      const query = `SELECT s.id, movieId, premiere, price, location, dateStart, dateEnd, time, 
-      name, category, image, releaseDate, cast, director, synopsis, duration FROM schedule AS s 
+      const query = `SELECT s.id, s.movieId, s.premiere, s.price, s.location, s.dateStart, s.dateEnd, s.time, 
+      m.name, m.category, m.image, m.releaseDate, m.cast, m.director, m.synopsis, m.duration FROM schedule AS s 
       JOIN movies AS m on m.id = s.movieId
       WHERE location LIKE '%${searchLocation}%'
       ${
