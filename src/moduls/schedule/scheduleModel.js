@@ -18,25 +18,27 @@ module.exports = {
 
   getAllSchedule: (searchLocation, searchMovieId, sort, limit, offset) =>
     new Promise((resolve, reject) => {
-      const query = `SELECT s.id, s.movieId, s.premiere, s.price, s.location, s.dateStart, s.dateEnd, s.time, 
+      connection.query(
+        `SELECT s.id, s.movieId, s.premiere, s.price, s.location, s.dateStart, s.dateEnd, s.time, 
       m.name, m.category, m.image, m.releaseDate, m.cast, m.director, m.synopsis, m.duration FROM schedule AS s 
       JOIN movies AS m on m.id = s.movieId
-      WHERE location LIKE '%${searchLocation}%'
+      WHERE s.location LIKE '%${searchLocation}%'
       ${
         searchMovieId
-          ? `AND movieId = ${searchMovieId} ORDER BY '${sort}'
+          ? `AND s.movieId = ${searchMovieId} ORDER BY '${sort}'
       LIMIT ? OFFSET ?`
           : `ORDER BY '${sort}'
       LIMIT ? OFFSET ?`
-      }`;
-
-      connection.query(query, [limit, offset], (error, result) => {
-        if (!error) {
-          resolve(result);
-        } else {
-          reject(new Error(error.sqlMessage));
+      }`,
+        [limit, offset],
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(error.sqlMessage));
+          }
         }
-      });
+      );
     }),
 
   getScheduleById: (id) =>
