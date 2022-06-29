@@ -24,7 +24,7 @@ module.exports = {
       }
 
       if (!sort) {
-        sort = "id";
+        sort = "ASC";
       }
 
       if (!searchName) {
