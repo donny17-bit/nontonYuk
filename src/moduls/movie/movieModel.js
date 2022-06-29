@@ -18,7 +18,7 @@ module.exports = {
 
   getAllMovies: (searchName, sort, limit, offset, searchRelease) =>
     new Promise((resolve, reject) => {
-      const query = connection.query(
+      connection.query(
         `SELECT * FROM movies WHERE name LIKE '%${searchName}%' 
         ${
           searchRelease
@@ -36,7 +36,6 @@ module.exports = {
           }
         }
       );
-      console.log(query);
     }),
 
   getMovieById: (id) =>
