@@ -23,8 +23,11 @@ module.exports = {
         ${
           searchRelease
             ? `AND MONTH(releaseDate) = ${searchRelease} 
-            ORDER BY name ${sort} LIMIT ? OFFSET ?`
-            : `ORDER BY name ${sort} LIMIT ? OFFSET ?`
+            ORDER BY name ${sort === "ASC" ? `ASC` : `DESC`} LIMIT ? OFFSET ?`
+            : // ${sort == 'ASC' ? `ASC LIMIT ? OFFSET` : `DESC LIMIT ? OFFSET` }
+              `ORDER BY name ${
+                sort === "ASC" ? `ASC` : `DESC`
+              } LIMIT ? OFFSET ?`
         }`,
         [limit, offset],
         (error, result) => {
