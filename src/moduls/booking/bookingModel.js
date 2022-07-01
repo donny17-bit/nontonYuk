@@ -66,7 +66,7 @@ module.exports = {
   getBookingByUserId: (userId) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "SELECT * FROM booking WHERE userId = ?",
+        "SELECT * FROM booking WHERE userId = ? ORDER BY dateBooking DESC",
         userId,
         (error, result) => {
           if (!error) {
