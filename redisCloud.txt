@@ -1,0 +1,4 @@
+user: default
+pass: PwHhOGIzfF5emHFNJvYwqeAKo3kyhaVA
+host: redis-18585.c257.us-east-1-3.ec2.cloud.redislabs.com
+port: 18585

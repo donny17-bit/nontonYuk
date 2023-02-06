@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const env = require("dotenv").config();
 
 // routes --
-const routerNavigation = require("./routes");
+const routerNavigation = require("./src/routes");
 
 const app = express();
 const port = process.env.PORT;
@@ -27,15 +27,17 @@ app.use(express.static("public"));
 // router --
 app.use("/", routerNavigation);
 
-app.use("/*", (request, response) => {
-  response.status(404).send("path not found");
-});
-
 app.get("/hello", (request, response) => {
   response.status(200);
   response.send("Hello World");
 });
 
+app.use("/*", (request, response) => {
+  response.status(404).send("path not found");
+});
+
 app.listen(port, () => {
   console.log(`express app is listen on port ${port} !`);
 });
+
+module.exports = app;

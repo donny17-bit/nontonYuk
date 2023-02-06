@@ -1,0 +1,10 @@
+user: fw6doni
+pass: Gswxo04!
+host: 
+
+db4free:
+user: nontonyuk
+pass: nontonYuk1
+db: nontonyuk_db
+
+4/0AWtgzh6vEsEHApNlFPzesRCzYmWZZAKzGP9U3lOR0YXFR8Hi9wkZwW-zWjLaBGSx7kEd1g
