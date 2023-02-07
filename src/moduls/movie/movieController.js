@@ -197,7 +197,7 @@ module.exports = {
         }
       }
 
-      const { image } = cekId[0].image;
+      const { image } = cekId[0];
 
       if (image) {
         cloudinary.uploader.destroy(image.slice(0, image.length - 4), () => {
