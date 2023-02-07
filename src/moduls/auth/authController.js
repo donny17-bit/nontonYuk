@@ -15,7 +15,6 @@ module.exports = {
 
       const { email, firstName, lastName, password, noTelp } = request.body;
 
-      // uuid baru di register doang / table user di db
       let setData = {
         id: uuidv4(),
         email,
@@ -39,6 +38,7 @@ module.exports = {
       // encrypt password
       const hash = bcrypt.hashSync(password);
 
+      console.log(hash);
       setData = { ...setData, password: hash };
 
       const result = await authModel.register(setData);
@@ -56,6 +56,7 @@ module.exports = {
 
       return helperWrapper.response(response, 200, "sukses register", result);
     } catch (error) {
+      console.log(error);
       return helperWrapper.response(response, 400, "bad request", null);
     }
   },

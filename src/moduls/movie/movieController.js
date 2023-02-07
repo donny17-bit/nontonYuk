@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require("uuid");
 const redis = require("../../config/redis");
 const helperWrapper = require("../../helpers/wrapper");
 const cloudinary = require("../../config/cloudinary");
@@ -123,6 +124,7 @@ module.exports = {
       } = request.body;
 
       const setData = {
+        id: uuidv4(),
         name,
         category,
         image: filename,
