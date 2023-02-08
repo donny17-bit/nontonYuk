@@ -7,7 +7,7 @@ const movieModel = require("./movieModel");
 module.exports = {
   getAllMovie: async (request, response) => {
     try {
-      const { searchRelease } = request.query;
+      const { searchRelease, isUpdate } = request.query;
       let { page, limit, sort, searchName } = request.query;
 
       // check is page empty or not
@@ -54,6 +54,11 @@ module.exports = {
         searchRelease
       );
 
+      // check is there any update data, like add movie or etc
+      if (isUpdate) {
+        delete request.query.isUpdate;
+      }
+
       redis.setEx(
         `getMovie:${JSON.stringify(request.query)}`,
         3600,
@@ -63,7 +68,7 @@ module.exports = {
       return helperWrapper.response(
         response,
         200,
-        "sukses get data",
+        "Sukses get data from database !",
         result,
         pageInfo
       );
@@ -87,7 +92,7 @@ module.exports = {
       }
 
       // proses menyimpan ke redis
-      redis.setEx(`getMovie:${id}`, 3600, JSON.stringify(result));
+      // redis.setEx(`getMovie:${id}`, 3600, JSON.stringify(result));
 
       return helperWrapper.response(
         response,
@@ -232,9 +237,8 @@ module.exports = {
         );
       }
 
-      const { image } = cekId[0].image;
+      const { image } = cekId[0];
 
-      // msih ngebug, di cloudinary blm kedelete pdhl dlu bsa
       if (image) {
         cloudinary.uploader.destroy(image.slice(0, image.length - 4), () => {
           console.log("data has been deleted in cloudinary");
