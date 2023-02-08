@@ -5,7 +5,6 @@ module.exports = {
   getMovieRedis: async (request, response, next) => {
     try {
       const { isUpdate } = request.query;
-
       const data = await redis.get(`getMovie:${JSON.stringify(request.query)}`);
       if (data !== null && isUpdate !== "true") {
         const { result, pageInfo } = JSON.parse(data);

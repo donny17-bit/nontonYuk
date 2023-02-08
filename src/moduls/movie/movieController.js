@@ -55,15 +55,13 @@ module.exports = {
       );
 
       // check is there any update data, like add movie or etc
-      if (isUpdate) {
-        delete request.query.isUpdate;
+      if (isUpdate !== "true") {
+        redis.setEx(
+          `getMovie:${JSON.stringify(request.query)}`,
+          3600,
+          JSON.stringify({ result, pageInfo })
+        );
       }
-
-      redis.setEx(
-        `getMovie:${JSON.stringify(request.query)}`,
-        3600,
-        JSON.stringify({ result, pageInfo })
-      );
 
       return helperWrapper.response(
         response,

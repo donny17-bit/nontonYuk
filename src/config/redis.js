@@ -1,11 +1,11 @@
 const redis = require("redis");
 
-const client = redis.createClient({
-  url: `redis://:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-});
+// const client = redis.createClient({
+//   url: `redis://:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+// });
 
 // local redis
-// const client = redis.createClient();
+const client = redis.createClient();
 
 (async () => {
   client.connect();
