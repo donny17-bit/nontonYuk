@@ -6,6 +6,7 @@ module.exports = {
     try {
       const { isUpdate } = request.query;
       const data = await redis.get(`getMovie:${JSON.stringify(request.query)}`);
+      // check is there any update
       if (data !== null && isUpdate !== "true") {
         const { result, pageInfo } = JSON.parse(data);
         return helperWrapper.response(

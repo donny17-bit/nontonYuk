@@ -7,7 +7,7 @@ const movieModel = require("./movieModel");
 module.exports = {
   getAllMovie: async (request, response) => {
     try {
-      const { searchRelease, isUpdate } = request.query;
+      const { searchRelease } = request.query;
       let { page, limit, sort, searchName } = request.query;
 
       // check is page empty or not
@@ -55,13 +55,16 @@ module.exports = {
       );
 
       // check is there any update data, like add movie or etc
-      if (isUpdate !== "true") {
-        redis.setEx(
-          `getMovie:${JSON.stringify(request.query)}`,
-          3600,
-          JSON.stringify({ result, pageInfo })
-        );
-      }
+      const datas = {
+        ...request.query,
+        isUpdate: "false",
+      };
+
+      redis.setEx(
+        `getMovie:${JSON.stringify(datas)}`,
+        3600,
+        JSON.stringify({ result, pageInfo })
+      );
 
       return helperWrapper.response(
         response,
