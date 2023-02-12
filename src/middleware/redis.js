@@ -41,15 +41,16 @@ module.exports = {
 
   getScheduleRedis: async (request, response, next) => {
     try {
+      const { isUpdate } = request.query;
       const data = await redis.get(
         `getSchedule:${JSON.stringify(request.query)}`
       );
-      if (data !== null) {
+      if (data !== null && isUpdate !== "true") {
         const { result, pageInfo } = JSON.parse(data);
         return helperWrapper.response(
           response,
           200,
-          "Success get data !",
+          "Success get data from redis!",
           result,
           pageInfo
         );

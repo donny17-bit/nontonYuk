@@ -54,8 +54,14 @@ module.exports = {
         offset
       );
 
+      // check is there any update data, like add schedules or etc
+      const datas = {
+        ...request.query,
+        isUpdate: "false",
+      };
+
       redis.setEx(
-        `getSchedule:${JSON.stringify(request.query)}`,
+        `getSchedule:${JSON.stringify(datas)}`,
         3600,
         JSON.stringify({ result, pageInfo })
       );
@@ -63,7 +69,7 @@ module.exports = {
       return helperWrapper.response(
         response,
         200,
-        "sukses get schedule",
+        "sukses get schedule from database",
         result,
         pageInfo
       );
