@@ -39,5 +39,3 @@ app.use("/*", (request, response) => {
 app.listen(port, () => {
   console.log(`express app is listen on port ${port} !`);
 });
-
-module.exports = app;
