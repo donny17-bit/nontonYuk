@@ -46,6 +46,19 @@ Password = Gswxo04!
 
 note: don't drop or remove table and database
 
+## Deploy Link
+
+- Link : https://itjobsproject.herokuapp.com/
+
+## Demo Accounts
+
+1. user account : user@mail.com
+   <br>
+   password : 12345
+2. admin account : admin@mail.com
+   <br>
+   password : 12345
+
 ## Set up .env file
 
 Open .env file on your favorite code editor, and copy paste this code below :
