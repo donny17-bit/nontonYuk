@@ -58,6 +58,8 @@ note: don't drop or remove table and database
 2. admin account : admin@mail.com
    <br>
    password : 12345
+   
+note: only works on db4free database
 
 ## Set up .env file
 
