@@ -34,6 +34,7 @@ Hostname = ec2-44-202-197-206.compute-1.amazonaws.com
 Port = 3306
 Username = fw6doni
 Password = Gswxo04!
+Database name = fw6doni_nontonYuk
 ```
 
 [db4free](https://www.db4free.net/)
@@ -42,6 +43,7 @@ Hostname = db4free.net
 Port = -
 Username = nontonyuk
 Password = nontonYuk1
+Database name = nontonyuk_db
 ```
 note: don't drop or remove table and database
 
@@ -84,7 +86,7 @@ MAIL_CLIENT_ID=
 MAIL_CLIENT_SECRET=
 MAIL_REFRESH_TOKEN=
 
-MIDTRANS_PRODUCTION=
+MIDTRANS_PRODUCTION= // boolean true or false
 MIDTRANS_SERVER_KEY=
 MIDTRANS_CLIENT_KEY=
 
