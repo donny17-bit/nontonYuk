@@ -164,12 +164,12 @@ module.exports = {
 
       const resultMidtrans = await helperMidtrans.post(setDataMidtrans);
       return helperWrapper.response(response, 200, `sukses create booking`, {
-        id: 5,
+        id: result.id,
         ...request.body,
         redirectUrl: resultMidtrans.redirect_url,
       });
     } catch (error) {
-      return helperWrapper.response(response, 400, "bad request", null);
+      return helperWrapper.response(response, 400, error.message, null);
     }
   },
 
