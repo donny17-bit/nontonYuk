@@ -43,7 +43,7 @@ Hostname = db4free.net
 Port = -
 Username = nontonyuk
 Password = nontonYuk1
-Database name = nontonYuk_db
+Database name = nontonyuk_db
 ```
 note: don't drop or remove table and database
 
