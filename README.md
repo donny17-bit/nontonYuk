@@ -48,7 +48,7 @@ note: don't drop or remove table and database
 
 ## Deploy Link
 
-- Link : https://itjobsproject.herokuapp.com/
+- Link : https://nontonyuk.cyclic.app/
 
 ## Demo Accounts
 
