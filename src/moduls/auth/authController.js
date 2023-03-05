@@ -110,7 +110,7 @@ module.exports = {
         refreshToken,
       });
     } catch (error) {
-      return helperWrapper.response(response, 400, "bad request", null);
+      return helperWrapper.response(response, 400, error.message, null);
     }
   },
 
