@@ -49,7 +49,8 @@ note: don't drop or remove table and database
 
 ## Deploy Link
 
-- Link : https://nontonyuk.cyclic.app/
+- Link 1 : https://nontonyuk.cyclic.app/
+- Link 2 : https://nontonyuk.up.railway.app/
 
 ## Demo Accounts
 
