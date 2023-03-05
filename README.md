@@ -59,7 +59,7 @@ note: don't drop or remove table and database
    password : 12345
 2. admin account : admin@mail.com
    <br>
-   password : 12345
+   password : 123
    
 note: only works on db4free database
 
