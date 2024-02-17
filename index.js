@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const env = require("dotenv").config();
 
 // routes --
-const routerNavigation = require("./src/routes");
+// const routerNavigation = require("./src/routes");
 
 const app = express();
 const port = process.env.PORT;
@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 
 // router --
-app.use("/", routerNavigation);
+// app.use("/", routerNavigation);
 
 app.get("/hello", (request, response) => {
   response.status(200);
